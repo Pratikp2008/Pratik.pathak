@@ -1,0 +1,45 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class PinballGame extends JPanel implements ActionListener {
+    private int ballX = 150;
+    private int ballY = 200;
+    private int ballXSpeed = 3;
+    private int ballYSpeed = 3;
+    private Timer timer;
+
+    public PinballGame() {
+        timer = new Timer(5, this);
+        timer.start();
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, 400, 400);
+
+        g.setColor(Color.RED);
+        g.fillOval(ballX, ballY, 20, 20);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (ballX >= 380 || ballX <= 0) {
+            ballXSpeed = -ballXSpeed;
+        }
+        if (ballY >= 380 || ballY <= 0) {
+            ballYSpeed = -ballYSpeed;
+        }
+        ballX += ballXSpeed;
+        ballY += ballYSpeed;
+        repaint();
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Pinball Game");
+        frame.setSize(400, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(new PinballGame());
+        frame.setVisible(true);
+    }
+}
