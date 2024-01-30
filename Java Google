@@ -1,0 +1,34 @@
+import com.google.api.services.slides.v1.Slides;
+import com.google.api.services.slides.v1.model.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class GoogleSlidesExample {
+
+    // Insert your credentials file path here
+    private static final String CREDENTIALS_FILE_PATH = "path/to/your/credentials.json";
+
+    public static void main(String[] args) throws IOException {
+        // Initialize Google Slides service
+        Slides slidesService = GoogleSlidesService.getSlidesService(CREDENTIALS_FILE_PATH);
+
+        // Create a new presentation
+        Presentation presentation = new Presentation();
+        presentation.setTitle("My Presentation");
+
+        // Create slides
+        List<Request> requests = new ArrayList<>();
+        requests.add(new Request().setCreateSlide(new CreateSlideRequest().setObjectId("mySlideId")));
+
+        BatchUpdatePresentationRequest batchUpdateRequest = new BatchUpdatePresentationRequest()
+                .setRequests(requests);
+
+        slidesService.presentations()
+                .batchUpdate(presentation.getPresentationId(), batchUpdateRequest)
+                .execute();
+
+        System.out.println("Presentation created successfully!");
+    }
+}
