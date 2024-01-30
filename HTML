@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistical Test</title>
+    <script>
+        function performTTest() {
+            // Retrieve data from input fields
+            var group1Data = document.getElementById("group1").value.split(",").map(Number);
+            var group2Data = document.getElementById("group2").value.split(",").map(Number);
+
+            // Perform t-test
+            var result = tTest(group1Data, group2Data);
+
+            // Display result
+            document.getElementById("result").innerHTML = "P-Value: " + result;
+        }
+
+        // Function to perform t-test (you can implement the t-test algorithm here)
+        function tTest(group1, group2) {
+            // Placeholder function for t-test calculation
+            // You need to implement the t-test algorithm here
+            // This is just a dummy implementation
+            return Math.random(); // Replace this with the actual t-test result
+        }
+    </script>
+</head>
+<body>
+    <h2>Perform T-Test</h2>
+    <label for="group1">Group 1 Data (comma-separated):</label>
+    <input type="text" id="group1"><br><br>
+    <label for="group2">Group 2 Data (comma-separated):</label>
+    <input type="text" id="group2"><br><br>
+    <button onclick="performTTest()">Perform T-Test</button><br><br>
+    <div id="result"></div>
+</body>
+</html>
