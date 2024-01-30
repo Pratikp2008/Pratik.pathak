@@ -1,0 +1,25 @@
+import org.apache.commons.math3.stat.inference.TTest;
+
+public class StatisticalTestExample {
+
+    public static void main(String[] args) {
+        // Sample data for two groups (e.g., test scores)
+        double[] group1Scores = {78, 85, 92, 88, 76, 81, 79, 83, 89, 90};
+        double[] group2Scores = {82, 79, 88, 86, 91, 80, 85, 87, 84, 83};
+
+        // Perform t-test
+        TTest tTest = new TTest();
+        double pValue = tTest.tTest(group1Scores, group2Scores);
+
+        // Interpret the results
+        double alpha = 0.05; // significance level
+
+        System.out.println("P-Value: " + pValue);
+
+        if (pValue < alpha) {
+            System.out.println("Reject the null hypothesis. There is a significant difference between the two groups.");
+        } else {
+            System.out.println("Fail to reject the null hypothesis. There is no significant difference between the two groups.");
+        }
+    }
+}
