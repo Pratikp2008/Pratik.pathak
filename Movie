@@ -1,0 +1,30 @@
+def write_scene(scene_description, characters, dialogue):
+    print("INT. " + scene_description)
+    print("------------")
+    for character, line in dialogue.items():
+        print(character.upper() + ": " + line)
+    print("------------\n")
+
+def write_direction(direction):
+    print(direction)
+
+# Title
+print("FADE IN:")
+
+# Opening scene
+write_scene("LIVING ROOM - DAY", {"Alice": "Good morning!", "Bob": "Hey, Alice."}, {"Alice": "How did you sleep?", "Bob": "Not too bad, thanks."})
+
+# Direction
+write_direction("Alice walks over to the window and opens the curtains.")
+
+# Next scene
+write_scene("KITCHEN - DAY", {"Alice": "I'm making breakfast."}, {"Alice": "Would you like some eggs?"})
+
+# Climactic scene
+write_scene("BACKYARD - NIGHT", {"Alice": "I can't believe it's finally happening.", "Bob": "I know, it's surreal."}, {"Alice": "We've come a long way.", "Bob": "Yes, we have."})
+
+# Conclusion
+write_direction("Alice and Bob hold hands and watch the stars.")
+
+# Ending
+print("FADE OUT.")
