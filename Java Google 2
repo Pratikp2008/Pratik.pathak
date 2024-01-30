@@ -1,0 +1,46 @@
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.slides.v1.Slides;
+import com.google.api.services.slides.v1.SlidesScopes;
+import com.google.api.services.slides.v1.model.Presentation;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
+
+public class GoogleSlidesService {
+
+    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+
+    public static Slides getSlidesService(String credentialsFilePath) throws IOException {
+        try {
+            // Initialize HTTP transport
+            HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+
+            // Load client secrets
+            GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+                    new FileReader(credentialsFilePath));
+
+            // Set up authorization code flow
+            GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                    httpTransport, JSON_FACTORY, clientSecrets,
+                    Collections.singleton(SlidesScopes.PRESENTATIONS))
+                    .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("tokens")))
+                    .build();
+
+            // Authorize
+            Credential credential = new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver())
+                    .authorize("user");
+
+            // Build Slides service
+            return new Slides.Builder(httpTransport, JSON_FACTORY, credential)
+                    .setApplicationName("Your Application Name")
+                    .build();
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+}
