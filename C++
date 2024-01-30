@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+#include <gsl/gsl_statistics.h>
+
+double performTTest(const std::vector<double>& group1, const std::vector<double>& group2) {
+    // Calculate means and standard deviations
+    double mean1 = gsl_stats_mean(group1.data(), 1, group1.size());
+    double mean2 = gsl_stats_mean(group2.data(), 1, group2.size());
+    double sd1 = gsl_stats_sd(group1.data(), 1, group1.size());
+    double sd2 = gsl_stats_sd(group2.data(), 1, group2.size());
+
+    // Perform t-test
+    double t, dof, pValue;
+    gsl_stats_ttest_ind(group1.data(), 1, group2.data(), 1, group1.size(), group2.size(), &t, &pValue);
+    
+    return pValue;
+}
+
+int main() {
+    // Sample data for two groups (e.g., test scores)
+    std::vector<double> group1 = {78, 85, 92, 88, 76, 81, 79, 83, 89, 90};
+    std::vector<double> group2 = {82, 79, 88, 86, 91, 80, 85, 87, 84, 83};
+
+    // Perform t-test
+    double pValue = performTTest(group1, group2);
+
+    // Interpret the results
+    double alpha = 0.05; // significance level
+
+    std::cout << "P-Value: " << pValue << std::endl;
+
+    if (pValue < alpha) {
+        std::cout << "Reject the null hypothesis. There is a significant difference between the two groups." << std::endl;
+    } else {
+        std::cout << "Fail to reject the null hypothesis. There is no significant difference between the two groups." << std::endl;
+    }
+
+    return 0;
+}
